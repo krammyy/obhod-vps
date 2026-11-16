@@ -13,7 +13,7 @@ bundle = ctk_datas + qr_datas + [(str(root / "obhod.ico"), ".")]
 if (root / "server.json").is_file():
     bundle.append((str(root / "server.json"), "."))
 else:
-    print("server.json не найден: сборка без встроенного сервера (см. server.example.json)")
+    print("server.json не найден: сборка без встроенного сервера")
 
 a = Analysis(
     ["obhod_app.py"],
