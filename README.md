@@ -1,12 +1,27 @@
-# SFA
+# OBHOD Android
 
-Experimental Android client for sing-box, the universal proxy platform.
+Клиент Android на базе sing-box for Android (SFA). Поддерживает импорт и редактирование профилей, переключение профилей и подключение через системный VPN Android.
 
-## Documentation
+## Сборка
 
-https://sing-box.sagernet.org/installation/clients/sfa/
+Установите JDK 17, Android SDK 37.1, Android NDK 28.0.13004108 и Git LFS. После клонирования выполните из корня:
 
-## License
+```powershell
+git lfs pull
+.\gradlew.bat :app:assembleOtherDebug
+```
+
+Сборка `otherDebug` использует `app/libs/libbox.aar` из Git LFS. Для варианта `otherLegacy` понадобится отдельный `app/libs/libbox-legacy.aar`. APK обычной отладочной сборки лежит в `app/build/outputs/apk/other/debug/`.
+
+## Подключение
+
+Импортируйте свой профиль в приложении и разрешите создание VPN-подключения. В `app/src/main/assets/obhod/` лежат примеры профилей с условными адресами. Для release-сборки задайте собственную конфигурацию подписи.
+
+## Лицензия и исходный проект
+
+Условия лицензии приведены в [LICENSE](LICENSE). Клиент основан на SFA. Ссылку на документацию исходного проекта см. ниже.
+
+[Документация SFA](https://sing-box.sagernet.org/installation/clients/sfa/)
 
 ```
 Copyright (C) 2022 by nekohasekai <contact-sagernet@sekai.icu>
@@ -31,6 +46,3 @@ with this application without prior consent.
 Under the license, that forks of the app are not allowed to be listed on F-Droid or other app stores
 under the original name.
 
-## OBHOD Android
-
-Profiles under `app/src/main/assets/obhod/` contain example server settings. Import your own profile in the app to connect. Release signing requires your own Android signing configuration. The included libbox build is for the standard variants. Build the legacy libbox separately to assemble `otherLegacy`.
