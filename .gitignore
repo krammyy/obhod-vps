@@ -17,7 +17,6 @@ local.properties
 local.properties
 *.keystore
 *.jks
-_frontol_creds.txt
 
 !app/libs/
 !app/libs/libbox.aar
