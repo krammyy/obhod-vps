@@ -1,0 +1,189 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "type": "https",
+        "tag": "doh",
+        "server": "example.invalid",
+        "path": "/dns-query",
+        "detour": "auto"
+      },
+      {
+        "type": "local",
+        "tag": "dns-local"
+      }
+    ],
+    "rules": [
+      {
+        "domain_suffix": [
+          "vk.com",
+          "vk.ru",
+          "vkontakte.ru",
+          "vk.me",
+          "vk.cc",
+          "vk.link",
+          "userapi.com",
+          "vk-cdn.net",
+          "vkuseraudio.net",
+          "vkuservideo.net",
+          "vkuserlive.net",
+          "vkvideo.ru",
+          "vkmessenger.com",
+          "vk-apps.com",
+          "vkforms.ru",
+          "mvk.com"
+        ],
+        "server": "example.invalid"
+      }
+    ],
+    "final": "doh",
+    "strategy": "ipv4_only",
+    "independent_cache": true
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "obhod0",
+      "address": [
+        "192.0.2.1"
+      ],
+      "mtu": 1280,
+      "auto_route": true,
+      "strict_route": false,
+      "stack": "system",
+      "route_exclude_address": [
+        "192.168.0.0/16",
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "26.0.0.0/8",
+        "205.196.84.5/32"
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "hysteria2",
+      "tag": "hy2",
+      "server": "example.invalid",
+      "server_port": 2080,
+      "password": "example",
+      "up_mbps": 500,
+      "down_mbps": 500,
+      "tls": {
+        "enabled": true,
+        "server_name": "example.invalid",
+        "alpn": [
+          "h3"
+        ],
+        "insecure": true,
+        "certificate": "-----BEGIN CERTIFICATE-----\nMIIBmzCCAUKgAwIBAgIUENeCyxpri9ZOfHzsXEVyUF2NbE4wCgYIKoZIzj0EAwIw\nFTETMBEGA1UEAwwKb2Job2QuZmFzdDAeFw0yNjA5MTQwNzMxMjNaFw0zNjA5MTEw\nNzMxMjNaMBUxEzARBgNVBAMMCm9iaG9kLmZhc3QwWTATBgcqhkjOPQIBBggqhkjO\nPQMBBwNCAAQvw1NxpJ/JG4Q0AWm+ecWp9/lp6iWhLt6VTwA1GJr/UNh6fCIpr2Sm\nSKCDqo3pKtxGT445dfBPoo3paNWP1B5Xo3AwbjAdBgNVHQ4EFgQUahc0X6wfLyiP\n9HmzrA4mAfxTfRAwHwYDVR0jBBgwFoAUahc0X6wfLyiP9HmzrA4mAfxTfRAwDwYD\nVR0TAQH/BAUwAwEB/zAbBgNVHREEFDASggpvYmhvZC5mYXN0hwTNxFQFMAoGCCqG\nSM49BAMCA0cAMEQCIB8bL4Ul5r7ld+OhwE0cSobp3+oPCoTYmfmcKpyHS64DAiBt\nDpSfr5cxqXLSlUXDYJpcWEE0PaUA/qGvQcr9K8lKbw==\n-----END CERTIFICATE-----\n"
+      },
+      "obfs": {
+        "type": "salamander",
+        "password": "example"
+      }
+    },
+    {
+      "type": "shadowsocks",
+      "tag": "ss",
+      "server": "example.invalid",
+      "server_port": 8388,
+      "method": "aes-256-gcm",
+      "password": "example",
+      "udp_over_tcp": {
+        "enabled": true
+      }
+    },
+    {
+      "type": "urltest",
+      "tag": "auto",
+      "outbounds": [
+        "hy2",
+        "ss"
+      ],
+      "url": "https://example.invalid/",
+      "interval": "3m",
+      "tolerance": 80,
+      "idle_timeout": "5m",
+      "interrupt_exist_connections": false
+    },
+    {
+      "type": "direct",
+      "tag": "direct"
+    }
+  ],
+  "route": {
+    "auto_detect_interface": false,
+    "default_domain_resolver": "doh",
+    "rules": [
+      {
+        "action": "sniff",
+        "timeout": "150ms"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "ip_cidr": [
+          "205.196.84.5/32"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "vk.com",
+          "vk.ru",
+          "vkontakte.ru",
+          "vk.me",
+          "vk.cc",
+          "vk.link",
+          "userapi.com",
+          "vk-cdn.net",
+          "vkuseraudio.net",
+          "vkuservideo.net",
+          "vkuserlive.net",
+          "vkvideo.ru",
+          "vkmessenger.com",
+          "vk-apps.com",
+          "vkforms.ru",
+          "mvk.com"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "ip_cidr": [
+          "87.240.128.0/18",
+          "95.213.0.0/18"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "discord.com",
+          "discord.gg",
+          "discord.media",
+          "discordapp.com",
+          "discordapp.net",
+          "discordcdn.com",
+          "discord.gift",
+          "telegram.org",
+          "t.me",
+          "telegram.me",
+          "cdn-telegram.org"
+        ],
+        "outbound": "direct"
+      }
+    ],
+    "final": "auto"
+  }
+}
