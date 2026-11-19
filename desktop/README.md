@@ -2,9 +2,9 @@
 
 Клиент обхода блокировок для Windows и Linux: интерфейс на customtkinter, туннель — встроенный sing-box (Hysteria2 + Shadowsocks), TUN-режим, режимы «Работа», «Дом», «Приватность».
 
-## Скачать
+## Получить сборку
 
-Готовый `.exe` — [Releases](https://github.com/krammyy/obhod-vps/releases).
+Чтобы получить приложение, выполните команды сборки ниже из папки `desktop/`.
 
 ## Возможности
 
