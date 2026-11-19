@@ -1,0 +1,24 @@
+# секреты и пользовательские данные — в репозиторий не попадают
+server.json
+servers.json
+settings.json
+keys/
+app_paths.json
+
+# сборка
+build/
+dist/
+__pycache__/
+*.pyc
+*.pyo
+
+# вендорные бинарники sing-box: скачиваются отдельно, см. README
+vendor/
+
+# архивы прошлых версий
+_archive/
+
+# журналы и временные файлы
+*.log
+hs_err_pid*.log
+*.tmp
