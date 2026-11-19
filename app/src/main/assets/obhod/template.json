@@ -8,7 +8,7 @@
       {
         "type": "https",
         "tag": "doh",
-        "server": "example.invalid",
+        "server": "1.1.1.1",
         "path": "/dns-query",
         "detour": "auto"
       },
@@ -105,7 +105,7 @@
         "hy2",
         "ss"
       ],
-      "url": "https://example.invalid/",
+      "url": "https://www.gstatic.com/generate_204",
       "interval": "3m",
       "tolerance": 80,
       "idle_timeout": "5m",
